@@ -6,17 +6,31 @@ using UnityEngine.AI;
 
 public class Mover : MonoBehaviour  
 {
-    public Transform target;
-    private NavMeshAgent _agent; 
+    private NavMeshAgent _agent;
+    private Camera _mainCamera;
     
     void Awake()
     {
+        _mainCamera = Camera.main;
         _agent = GetComponent<NavMeshAgent>(); 
     }
     
     // Update is called once per frame
     void Update()
     {
-        _agent.destination = target.position; 
+        if (Input.GetMouseButtonDown(0))
+        {
+            MoveToCursor();
+        }
+    }
+
+    private void MoveToCursor()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(_mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
+        {
+            _agent.destination = hit.point;
+        }
     }
 }
