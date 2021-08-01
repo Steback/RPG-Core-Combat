@@ -6,11 +6,17 @@ using UnityEngine.AI;
 
 public class Mover : MonoBehaviour  
 {
-    [SerializeField] Transform target;
+    public Transform target;
+    private NavMeshAgent _agent; 
+    
+    void Awake()
+    {
+        _agent = GetComponent<NavMeshAgent>(); 
+    }
     
     // Update is called once per frame
     void Update()
     {
-        GetComponent<NavMeshAgent>().SetDestination(target.position);
+        _agent.destination = target.position; 
     }
 }
