@@ -7,11 +7,14 @@ namespace Core
     {
         private NavMeshAgent _agent;
         private Camera _mainCamera;
-    
+        private Animator _animator;
+        private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
+
         void Awake()
         {
             _mainCamera = Camera.main;
-            _agent = GetComponent<NavMeshAgent>(); 
+            _agent = GetComponent<NavMeshAgent>();
+            _animator = GetComponent<Animator>();
         }
     
         // Start is called before the first frame update
@@ -27,16 +30,21 @@ namespace Core
             {
                 MoveToCursor();
             }
+
+            UpdateAnimator();
         }
 
         private void MoveToCursor()
         {
-            RaycastHit hit;
-
-            if (Physics.Raycast(_mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
+            if (Physics.Raycast(_mainCamera.ScreenPointToRay(Input.mousePosition), out var hit))
             {
                 _agent.destination = hit.point;
             }
+        }
+
+        private void UpdateAnimator()
+        {
+            _animator.SetFloat(ForwardSpeed, transform.InverseTransformDirection(_agent.velocity).z);
         }
     }
 }
