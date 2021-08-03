@@ -8,7 +8,7 @@ namespace Core
         private NavMeshAgent _agent;
         private Camera _mainCamera;
         private Animator _animator;
-        private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
+        private static readonly int ForwardSpeedID = Animator.StringToHash("forwardSpeed");
 
         void Awake()
         {
@@ -44,7 +44,7 @@ namespace Core
 
         private void UpdateAnimator()
         {
-            _animator.SetFloat(ForwardSpeed, transform.InverseTransformDirection(_agent.velocity).z);
+            _animator.SetFloat(ForwardSpeedID, transform.InverseTransformDirection(_agent.velocity).z);
         }
     }
 }
