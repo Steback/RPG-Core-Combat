@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Core
+namespace Movement
 {
     public class Mover : MonoBehaviour  
     {
