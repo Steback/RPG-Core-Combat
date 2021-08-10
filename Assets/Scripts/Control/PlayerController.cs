@@ -54,7 +54,7 @@ namespace Control
                 { 
                     _mover.MoveTo(hit.point);
                 }
-                
+
                 return true;
             }
 

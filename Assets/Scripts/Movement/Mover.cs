@@ -21,8 +21,14 @@ namespace Movement
             UpdateAnimator();
         }
 
+        public void Stop()
+        {
+            _agent.isStopped = true;
+        }
+
         public void MoveTo(Vector3 destination)
         {
+            _agent.isStopped = false;
             _agent.destination = destination;
         }
 
