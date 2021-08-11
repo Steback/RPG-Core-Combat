@@ -18,18 +18,27 @@ namespace Combat
 
         private void Update()
         {
-            if (_target)
+            if (!_target) return;
+
+            if (TargetIsInRange())
             {
-                if (Vector3.Distance(transform.position, _target.position) > weaponRange)
-                {
-                    _mover.MoveTo(_target.position);
-                }
-                else
-                {
-                    _target = null;
-                    _mover.Stop();
-                }
+                _mover.MoveTo(_target.position);
             }
+            else
+            {
+                ResetTarget();
+                _mover.Stop();
+            }
+        }
+
+        public bool TargetIsInRange()
+        {
+            return Vector3.Distance(transform.position, _target.position) > weaponRange;
+        }
+
+        public void ResetTarget()
+        {
+            _target = null;
         }
 
         public void Attack(CombatTarget target)

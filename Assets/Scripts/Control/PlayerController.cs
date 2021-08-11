@@ -29,7 +29,6 @@ namespace Control
         private bool InteractWithCombat()
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMousRay());
-
             foreach (var hit in hits)
             {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
