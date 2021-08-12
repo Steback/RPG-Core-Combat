@@ -1,19 +1,22 @@
 using System;
+using Core;
 using Movement;
 using UnityEngine;
 
 namespace Combat
 {
-    public class Fighter : MonoBehaviour
+    public class Fighter : MonoBehaviour, IAction
     {
         private Mover _mover;
         private Transform _target;
+        private ActionScheduler _actionScheduler;
 
         [SerializeField] private float weaponRange = 2.0f;
 
         private void Awake()
         {
             _mover = GetComponent<Mover>();
+            _actionScheduler = GetComponent<ActionScheduler>();
         }
 
         private void Update()
@@ -43,7 +46,13 @@ namespace Combat
 
         public void Attack(CombatTarget target)
         {
+            _actionScheduler.StartAction(this);
             _target = target.transform;
+        }
+
+        public void Cancel()
+        {
+            ResetTarget();
         }
     }
 }
