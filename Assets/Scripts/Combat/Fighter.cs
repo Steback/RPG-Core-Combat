@@ -2,6 +2,7 @@ using System;
 using Core;
 using Movement;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Combat
 {
@@ -10,17 +11,24 @@ namespace Combat
         private Mover _mover;
         private Transform _target;
         private ActionScheduler _actionScheduler;
+        private Animator _animator;
+        private float _timeSinceLastAttack = 0;
+        private static readonly int AttackAnimationID = Animator.StringToHash("attack");
 
-        [SerializeField] private float weaponRange = 2.0f;
+        [SerializeField] public float weaponRange = 2.0f;
+        [SerializeField] public float timeBetweenAttacks = 1f;
 
         private void Awake()
         {
             _mover = GetComponent<Mover>();
             _actionScheduler = GetComponent<ActionScheduler>();
+            _animator = GetComponent<Animator>();
         }
 
         private void Update()
         {
+            _timeSinceLastAttack += Time.deltaTime;
+            
             if (!_target) return;
 
             if (TargetIsInRange())
@@ -29,8 +37,17 @@ namespace Combat
             }
             else
             {
-                ResetTarget();
                 _mover.Stop();
+                AttackBehaviour();
+            }
+        }
+
+        private void AttackBehaviour()
+        {
+            if (_timeSinceLastAttack > timeBetweenAttacks)
+            {
+                _animator.SetTrigger(AttackAnimationID);
+                _timeSinceLastAttack = 0;
             }
         }
 
@@ -53,6 +70,12 @@ namespace Combat
         public void Cancel()
         {
             ResetTarget();
+        }
+
+        // Animation Event
+        void Hit()
+        {
+            
         }
     }
 }
