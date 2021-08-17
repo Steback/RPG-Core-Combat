@@ -17,6 +17,7 @@ namespace Combat
 
         [SerializeField] public float weaponRange = 2.0f;
         [SerializeField] public float timeBetweenAttacks = 1f;
+        [SerializeField] public float weaponDamage = 5.0f;
 
         private void Awake()
         {
@@ -46,9 +47,16 @@ namespace Combat
         {
             if (_timeSinceLastAttack > timeBetweenAttacks)
             {
+                // This will trigger the Hit() event
                 _animator.SetTrigger(AttackAnimationID);
                 _timeSinceLastAttack = 0;
             }
+        }
+
+        // Animation Event
+        void Hit()
+        {
+            _target.GetComponent<Heath>().TakeDamage(weaponDamage);
         }
 
         public bool TargetIsInRange()
@@ -70,12 +78,6 @@ namespace Combat
         public void Cancel()
         {
             ResetTarget();
-        }
-
-        // Animation Event
-        void Hit()
-        {
-            
         }
     }
 }
