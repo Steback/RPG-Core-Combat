@@ -32,7 +32,7 @@ namespace Control
             foreach (var hit in hits)
             {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-                if (!target) continue;
+                if (!target || !target.isValid) continue;
                 
                 if (Input.GetMouseButtonDown(0))
                 {
