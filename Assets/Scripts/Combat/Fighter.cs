@@ -14,7 +14,7 @@ namespace Combat
         private Animator _animator;
         private float _timeSinceLastAttack = 0;
         private static readonly int AttackAnimationID = Animator.StringToHash("attack");
-        private static readonly int StopAttack = Animator.StringToHash("stopAttack");
+        private static readonly int StopAttackAnimationID = Animator.StringToHash("stopAttack");
 
         [SerializeField] public float weaponRange = 2.0f;
         [SerializeField] public float timeBetweenAttacks = 1f;
@@ -49,8 +49,7 @@ namespace Combat
             _mover.transform.LookAt(_target.transform);
             if (_timeSinceLastAttack > timeBetweenAttacks)
             {
-                // This will trigger the Hit() event
-                _animator.SetTrigger(AttackAnimationID);
+                TriggerAttack();
                 _timeSinceLastAttack = 0;
             }
         }
@@ -58,10 +57,7 @@ namespace Combat
         // Animation Event
         void Hit()
         {
-            if (_target)
-            {
-                _target.TakeDamage(weaponDamage);
-            }
+            if (_target) _target.TakeDamage(weaponDamage);
         }
 
         public bool TargetIsInRange()
@@ -85,8 +81,21 @@ namespace Combat
 
         public void Cancel()
         {
-            _animator.SetTrigger(StopAttack);
+            StopAttack();
             ResetTarget();
+        }
+
+        public void TriggerAttack()
+        {
+            _animator.ResetTrigger(StopAttackAnimationID);
+            // This will trigger the Hit() event
+            _animator.SetTrigger(AttackAnimationID);
+        }
+
+        public void StopAttack()
+        {
+            _animator.ResetTrigger(AttackAnimationID);
+            _animator.SetTrigger(StopAttackAnimationID);
         }
     }
 }
