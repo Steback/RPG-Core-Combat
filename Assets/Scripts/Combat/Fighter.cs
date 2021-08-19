@@ -10,7 +10,6 @@ namespace Combat
     {
         private Mover _mover;
         private Health _target;
-        private Transform _targetTransform;
         private ActionScheduler _actionScheduler;
         private Animator _animator;
         private float _timeSinceLastAttack = 0;
@@ -32,13 +31,11 @@ namespace Combat
         {
             _timeSinceLastAttack += Time.deltaTime;
             
-            if (!_target) return;
-            
-            if (_target.IsDeath()) return;
+            if (!_target || _target.IsDeath()) return;
 
             if (TargetIsInRange())
             {
-                _mover.MoveTo(_targetTransform.position);
+                _mover.MoveTo(_target.transform.position);
             }
             else
             {
@@ -49,6 +46,7 @@ namespace Combat
 
         private void AttackBehaviour()
         {
+            _mover.transform.LookAt(_target.transform);
             if (_timeSinceLastAttack > timeBetweenAttacks)
             {
                 // This will trigger the Hit() event
@@ -68,7 +66,7 @@ namespace Combat
 
         public bool TargetIsInRange()
         {
-            return Vector3.Distance(transform.position, _targetTransform.position) > weaponRange;
+            return Vector3.Distance(transform.position, _target.transform.position) > weaponRange;
         }
 
         public void ResetTarget()
@@ -83,7 +81,6 @@ namespace Combat
             if (_target.IsDeath()) return;
            
             _actionScheduler.StartAction(this);
-            _targetTransform = target.transform;
         }
 
         public void Cancel()
