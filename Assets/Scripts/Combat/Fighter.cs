@@ -9,11 +9,13 @@ namespace Combat
     public class Fighter : MonoBehaviour, IAction
     {
         private Mover _mover;
-        private Transform _target;
+        private Health _target;
+        private Transform _targetTransform;
         private ActionScheduler _actionScheduler;
         private Animator _animator;
         private float _timeSinceLastAttack = 0;
         private static readonly int AttackAnimationID = Animator.StringToHash("attack");
+        private static readonly int StopAttack = Animator.StringToHash("stopAttack");
 
         [SerializeField] public float weaponRange = 2.0f;
         [SerializeField] public float timeBetweenAttacks = 1f;
@@ -31,10 +33,12 @@ namespace Combat
             _timeSinceLastAttack += Time.deltaTime;
             
             if (!_target) return;
+            
+            if (_target.IsDeath()) return;
 
             if (TargetIsInRange())
             {
-                _mover.MoveTo(_target.position);
+                _mover.MoveTo(_targetTransform.position);
             }
             else
             {
@@ -56,12 +60,15 @@ namespace Combat
         // Animation Event
         void Hit()
         {
-            _target.GetComponent<Heath>().TakeDamage(weaponDamage);
+            if (_target)
+            {
+                _target.TakeDamage(weaponDamage);
+            }
         }
 
         public bool TargetIsInRange()
         {
-            return Vector3.Distance(transform.position, _target.position) > weaponRange;
+            return Vector3.Distance(transform.position, _targetTransform.position) > weaponRange;
         }
 
         public void ResetTarget()
@@ -71,12 +78,17 @@ namespace Combat
 
         public void Attack(CombatTarget target)
         {
+            _target = target.GetComponent<Health>();
+            
+            if (_target.IsDeath()) return;
+           
             _actionScheduler.StartAction(this);
-            _target = target.transform;
+            _targetTransform = target.transform;
         }
 
         public void Cancel()
         {
+            _animator.SetTrigger(StopAttack);
             ResetTarget();
         }
     }
