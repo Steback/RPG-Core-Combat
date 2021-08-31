@@ -42,5 +42,11 @@ namespace Control
         {
             return Vector3.Distance(transform.position, _player.transform.position);
         }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, chaseDistance);
+        }
     }
 }
