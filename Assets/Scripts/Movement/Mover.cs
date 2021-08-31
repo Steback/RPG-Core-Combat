@@ -9,6 +9,7 @@ namespace Movement
         private NavMeshAgent _agent;
         private Animator _animator;
         private ActionScheduler _actionScheduler;
+        private Health _health;
         private static readonly int ForwardSpeedID = Animator.StringToHash("forwardSpeed");
 
         void Awake()
@@ -16,11 +17,14 @@ namespace Movement
             _agent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
             _actionScheduler = GetComponent<ActionScheduler>();
+            _health = GetComponent<Health>();
         }
     
         // Update is called once per frame
         void Update()
         {
+            _agent.enabled = !_health.IsDeath();
+            
             UpdateAnimator();
         }
 

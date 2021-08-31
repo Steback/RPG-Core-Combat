@@ -12,7 +12,7 @@ namespace Combat
         private Health _target;
         private ActionScheduler _actionScheduler;
         private Animator _animator;
-        private float _timeSinceLastAttack = 0;
+        private float _timeSinceLastAttack = Mathf.Infinity;
         private static readonly int AttackAnimationID = Animator.StringToHash("attack");
         private static readonly int StopAttackAnimationID = Animator.StringToHash("stopAttack");
 

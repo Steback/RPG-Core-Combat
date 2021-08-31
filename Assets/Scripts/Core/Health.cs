@@ -1,12 +1,12 @@
-using System;
+using Combat;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Combat
+namespace Core
 {
     public class Health : MonoBehaviour
     {
         private Animator _animator;
+        private ActionScheduler _actionScheduler;
         private bool _isDeath = false;
         private static readonly int DieTriggerID = Animator.StringToHash("die");
 
@@ -15,6 +15,7 @@ namespace Combat
         private void Awake()
         {
             _animator = GetComponent<Animator>();
+            _actionScheduler = GetComponent<ActionScheduler>();
         }
 
         public void TakeDamage(float damage)
@@ -33,6 +34,7 @@ namespace Combat
                 GetComponent<CombatTarget>().isValid = false;
             
             _animator.SetTrigger(DieTriggerID);
+            _actionScheduler.CancelCurrentAction();
             _isDeath = true;
         }
 
