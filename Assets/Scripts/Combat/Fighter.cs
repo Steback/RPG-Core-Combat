@@ -70,7 +70,7 @@ namespace Combat
             _target = null;
         }
 
-        public void Attack(CombatTarget target)
+        public void Attack(GameObject target)
         {
             _target = target.GetComponent<Health>();
             

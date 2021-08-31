@@ -29,7 +29,9 @@ namespace Combat
 
         public void Die()
         {
-            GetComponent<CombatTarget>().isValid = false;
+            if (!gameObject.CompareTag("Player")) 
+                GetComponent<CombatTarget>().isValid = false;
+            
             _animator.SetTrigger(DieTriggerID);
             _isDeath = true;
         }
