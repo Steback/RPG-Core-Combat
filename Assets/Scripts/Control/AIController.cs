@@ -1,6 +1,7 @@
 using System;
 using Combat;
 using Core;
+using Movement;
 using UnityEngine;
 
 namespace Control
@@ -10,6 +11,8 @@ namespace Control
         private GameObject _player;
         private Fighter _fighter;
         private Health _health;
+        private Mover _mover;
+        private Vector3 _guardPosition;
         [SerializeField] private float chaseDistance = 5f;
 
         private void Awake()
@@ -17,6 +20,8 @@ namespace Control
             _player = GameObject.FindWithTag("Player");
             _fighter = GetComponent<Fighter>();
             _health = GetComponent<Health>();
+            _mover = GetComponent<Mover>();
+            _guardPosition = transform.position;
         }
 
         private void Update()
@@ -30,6 +35,7 @@ namespace Control
             else
             {
                 _fighter.Cancel();
+                _mover.MoveTo(_guardPosition);
             }
         }
 
