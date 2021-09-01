@@ -13,7 +13,9 @@ namespace Control
         private Health _health;
         private Mover _mover;
         private Vector3 _guardPosition;
+        private float _timeSinceLastSawPlayer = Mathf.Infinity;
         [SerializeField] private float chaseDistance = 5f;
+        [SerializeField] private float suspicionTime = 3f; 
 
         private void Awake()
         {
@@ -30,13 +32,19 @@ namespace Control
 
             if (InAttackRange() && !_player.GetComponent<Health>().IsDeath())
             {
-                _fighter.Attack(_player);
+                _timeSinceLastSawPlayer = 0;
+                AttackBehavior();
+            }
+            else if (_timeSinceLastSawPlayer < suspicionTime)
+            {
+                SuspicionBehavior();
             }
             else
             {
-                _fighter.Cancel();
-                _mover.MoveTo(_guardPosition);
+                GuardBehavior();
             }
+
+            _timeSinceLastSawPlayer += Time.deltaTime;
         }
 
         private bool InAttackRange()
@@ -53,6 +61,21 @@ namespace Control
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(transform.position, chaseDistance);
+        }
+
+        private void AttackBehavior()
+        {
+            _fighter.Attack(_player);
+        }
+
+        private void SuspicionBehavior()
+        { 
+            GetComponent<ActionScheduler>().CancelCurrentAction();
+        }
+
+        private void GuardBehavior()
+        {
+            _mover.MoveTo(_guardPosition);
         }
     }
 }
