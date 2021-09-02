@@ -11,8 +11,20 @@ namespace Control
         {
             for (int i = 0; i < transform.childCount; i++)
             {
-                Gizmos.DrawSphere(transform.GetChild(i).position, waypointRadius);
+                Gizmos.DrawSphere(GetWaypoint(i), waypointRadius);
+                Gizmos.DrawLine(GetWaypoint(i), GetWaypoint(GetNextIndex(i)));
             }
+        }
+
+        private Vector3 GetWaypoint(int index)
+        {
+            return transform.GetChild(index).position;
+        }
+
+        private int GetNextIndex(int index)
+        {
+            int nextIndex = index + 1;
+            return nextIndex >= transform.childCount ? 0 : nextIndex;
         }
     }
 }
