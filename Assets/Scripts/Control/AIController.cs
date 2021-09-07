@@ -16,10 +16,12 @@ namespace Control
         private Vector3 _guardPosition;
         private int _currentWaypointIndex = 0;
         private float _timeSinceLastSawPlayer = Mathf.Infinity;
+        private float _timeSinceArrivedToWaypoint = Mathf.Infinity;
         [SerializeField] private float chaseDistance = 5f;
         [SerializeField] private float suspicionTime = 3f;
         [SerializeField] private PatrolPath patrolPath;
         [SerializeField] private float waypointTolerance = 1.0f;
+        [SerializeField] private float waypointDwellTime = 3.0f;
 
         private void Awake()
         {
@@ -33,10 +35,11 @@ namespace Control
         private void Update()
         {
             if (_health.IsDeath()) return;
+            
+            UpdateTimes();
 
             if (InAttackRange() && !_player.GetComponent<Health>().IsDeath())
             {
-                _timeSinceLastSawPlayer = 0;
                 AttackBehavior();
             }
             else if (_timeSinceLastSawPlayer < suspicionTime)
@@ -47,8 +50,6 @@ namespace Control
             {
                 PatrolBehavior();
             }
-
-            _timeSinceLastSawPlayer += Time.deltaTime;
         }
 
         private bool InAttackRange()
@@ -69,6 +70,7 @@ namespace Control
 
         private void AttackBehavior()
         {
+            _timeSinceLastSawPlayer = 0;
             _fighter.Attack(_player);
         }
 
@@ -83,15 +85,20 @@ namespace Control
 
             if (patrolPath)
             {
+                
                 if (AtWaypoint())
                 {
+                    _timeSinceArrivedToWaypoint = 0;
                     CycleWaypoint();
                 }
 
                 nextPosition = GetCurrentWaypoint();
             }
             
-            _mover.MoveTo(nextPosition);
+            if (_timeSinceArrivedToWaypoint > waypointDwellTime)
+            {
+                _mover.MoveTo(nextPosition);
+            }
         }
 
         private bool AtWaypoint()
@@ -107,6 +114,12 @@ namespace Control
         private Vector3 GetCurrentWaypoint()
         {
             return patrolPath.GetWaypoint(_currentWaypointIndex);
+        }
+
+        private void UpdateTimes()
+        {
+            _timeSinceLastSawPlayer += Time.deltaTime;
+            _timeSinceArrivedToWaypoint += Time.deltaTime;
         }
     }
 }

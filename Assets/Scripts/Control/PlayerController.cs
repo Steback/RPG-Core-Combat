@@ -39,7 +39,7 @@ namespace Control
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
                 if(!target || !target.isValid) continue;
                 
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButton(0))
                 {
                     _fighter.Attack(target.gameObject);
                 }
