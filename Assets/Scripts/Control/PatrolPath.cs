@@ -16,12 +16,12 @@ namespace Control
             }
         }
 
-        private Vector3 GetWaypoint(int index)
+        public Vector3 GetWaypoint(int index)
         {
             return transform.GetChild(index).position;
         }
 
-        private int GetNextIndex(int index)
+        public int GetNextIndex(int index)
         {
             int nextIndex = index + 1;
             return nextIndex >= transform.childCount ? 0 : nextIndex;
