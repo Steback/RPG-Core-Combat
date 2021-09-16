@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: ab900b5e025bb765c8c95236a1aee7da, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 3a823fcf9e7406ea49c6da253aa1358e, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -12588,11 +12588,28 @@ PrefabInstance:
       value: Portal
       objectReference: {fileID: 0}
     - target: {fileID: 3314296791443064090, guid: 306596ce8115da2449dc0e63c5e2dd85, type: 3}
+      propertyPath: spawnPoint
+      value: 
+      objectReference: {fileID: 289488310805802152}
+    - target: {fileID: 3314296791443064090, guid: 306596ce8115da2449dc0e63c5e2dd85, type: 3}
       propertyPath: sceneToLoad
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6570880772342010093, guid: 306596ce8115da2449dc0e63c5e2dd85, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570880772342010093, guid: 306596ce8115da2449dc0e63c5e2dd85, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 306596ce8115da2449dc0e63c5e2dd85, type: 3}
+--- !u!4 &289488310805802152 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6570880772342010093, guid: 306596ce8115da2449dc0e63c5e2dd85, type: 3}
+  m_PrefabInstance: {fileID: 289488310805802151}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4575386881701775383
 MonoBehaviour:
   m_ObjectHideFlags: 0
