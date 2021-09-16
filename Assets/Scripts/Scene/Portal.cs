@@ -7,8 +7,14 @@ namespace Scene
 {
     public class Portal : MonoBehaviour
     {
+        enum Destination
+        {
+            A, B, C, D, E
+        }
+        
         [SerializeField] private int sceneToLoad = -1;
         [SerializeField] private Transform spawnPoint;
+        [SerializeField] private Destination destination;
         
         private void OnTriggerEnter(Collider other)
         {
@@ -41,8 +47,9 @@ namespace Scene
             foreach (Portal portal in FindObjectsOfType<Portal>())
             {
                 if (portal == this) continue;
+                if (portal.destination != destination) continue;
 
-                return portal;
+                    return portal;
             }
 
             return null;
