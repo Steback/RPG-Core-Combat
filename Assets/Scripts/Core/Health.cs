@@ -1,9 +1,10 @@
 using Combat;
+using Saving;
 using UnityEngine;
 
 namespace Core
 {
-    public class Health : MonoBehaviour
+    public class Health : MonoBehaviour, ISaveable
     {
         private Animator _animator;
         private ActionScheduler _actionScheduler;
@@ -41,6 +42,21 @@ namespace Core
         public bool IsDeath()
         {
             return _isDeath;
+        }
+
+        public object CaptureState()
+        {
+            return health;
+        }
+
+        public void RestoreState(object state)
+        {
+            health = (float) state;
+            
+            if (health <= 0 && !_isDeath)
+            {
+                Die();
+            }
         }
     }
 }
