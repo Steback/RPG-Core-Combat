@@ -33,7 +33,13 @@ namespace Scene
             Fader fader = FindObjectOfType<Fader>();
 
             yield return fader.FadeOut(fadeOutTime);
+
+            SavingWrapper wrapper = FindObjectOfType<SavingWrapper>();
+            wrapper.Save();
+            
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
+            
+            wrapper.Load();
 
             Portal portal = GetOtherPortal();
             UpdatePlayer(portal);

@@ -19,12 +19,12 @@ namespace Scene
             }
         }
 
-        private void Save()
+        public void Save()
         {
             GetComponent<SavingSystem>().Save(DefaultSavingFile);
         }
 
-        private void Load()
+        public void Load()
         {
             GetComponent<SavingSystem>().Load(DefaultSavingFile);
         }
