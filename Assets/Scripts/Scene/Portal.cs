@@ -43,6 +43,8 @@ namespace Scene
 
             Portal portal = GetOtherPortal();
             UpdatePlayer(portal);
+            
+            wrapper.Save();
 
             yield return new WaitForSeconds(fadeWaitTime);
             yield return fader.FadeIn(fadeInTime);
