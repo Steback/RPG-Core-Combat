@@ -19,12 +19,16 @@ namespace Combat
         [SerializeField] public float weaponRange = 2.0f;
         [SerializeField] public float timeBetweenAttacks = 1f;
         [SerializeField] public float weaponDamage = 5.0f;
+        [SerializeField] private GameObject weaponPrefab = null;
+        [SerializeField] private Transform handTransform = null;
 
         private void Awake()
         {
             _mover = GetComponent<Mover>();
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
+
+            SpawnWeapon();
         }
 
         private void Update()
@@ -42,6 +46,11 @@ namespace Combat
                 _mover.Stop();
                 AttackBehaviour();
             }
+        }
+
+        private void SpawnWeapon()
+        {
+            Instantiate(weaponPrefab, handTransform);
         }
 
         private void AttackBehaviour()
