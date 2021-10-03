@@ -21,6 +21,7 @@ namespace Combat
         [SerializeField] public float weaponDamage = 5.0f;
         [SerializeField] private GameObject weaponPrefab = null;
         [SerializeField] private Transform handTransform = null;
+        [SerializeField] private AnimatorOverrideController weaponOverrider = null;
 
         private void Awake()
         {
@@ -51,6 +52,8 @@ namespace Combat
         private void SpawnWeapon()
         {
             Instantiate(weaponPrefab, handTransform);
+            Animator animator = GetComponent<Animator>();
+            animator.runtimeAnimatorController = weaponOverrider;
         }
 
         private void AttackBehaviour()
