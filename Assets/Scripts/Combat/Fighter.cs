@@ -1,8 +1,6 @@
-using System;
 using Core;
 using Movement;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Combat
 {
@@ -19,9 +17,8 @@ namespace Combat
         [SerializeField] public float weaponRange = 2.0f;
         [SerializeField] public float timeBetweenAttacks = 1f;
         [SerializeField] public float weaponDamage = 5.0f;
-        [SerializeField] private GameObject weaponPrefab = null;
         [SerializeField] private Transform handTransform = null;
-        [SerializeField] private AnimatorOverrideController weaponOverrider = null;
+        [SerializeField] private Weapon weapon = null;
 
         private void Awake()
         {
@@ -51,9 +48,9 @@ namespace Combat
 
         private void SpawnWeapon()
         {
-            Instantiate(weaponPrefab, handTransform);
-            Animator animator = GetComponent<Animator>();
-            animator.runtimeAnimatorController = weaponOverrider;
+            if (!weapon) return;
+            
+            weapon.Spawn(handTransform, GetComponent<Animator>());
         }
 
         private void AttackBehaviour()

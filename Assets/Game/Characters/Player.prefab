@@ -981,8 +981,8 @@ MonoBehaviour:
   weaponRange: 1
   timeBetweenAttacks: 1
   weaponDamage: 5
-  weaponPrefab: {fileID: 1772304201729713997, guid: 5d26b635674be0bcab2fca5f748c14c0, type: 3}
   handTransform: {fileID: 5676860227271757754}
+  weapon: {fileID: 11400000, guid: 9fd55d443c78fa1029597b7fd51bc118, type: 2}
 --- !u!195 &2584693609046820674
 NavMeshAgent:
   m_ObjectHideFlags: 0
