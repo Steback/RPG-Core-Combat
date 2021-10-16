@@ -11,12 +11,13 @@ namespace Combat
         private ActionScheduler _actionScheduler;
         private Animator _animator;
         private float _timeSinceLastAttack = Mathf.Infinity;
+        private Weapon currentWeapon = null;
         private static readonly int AttackAnimationID = Animator.StringToHash("attack");
         private static readonly int StopAttackAnimationID = Animator.StringToHash("stopAttack");
 
         [SerializeField] public float timeBetweenAttacks = 1f;
         [SerializeField] private Transform handTransform = null;
-        [SerializeField] private Weapon weapon = null;
+        [SerializeField] private Weapon defaultWeapon = null;
 
         private void Awake()
         {
@@ -24,7 +25,7 @@ namespace Combat
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
 
-            SpawnWeapon();
+            EquipWeapon(defaultWeapon);
         }
 
         private void Update()
@@ -44,11 +45,10 @@ namespace Combat
             }
         }
 
-        private void SpawnWeapon()
+        public void EquipWeapon(Weapon weapon)
         {
-            if (!weapon) return;
-            
-            weapon.Spawn(handTransform, GetComponent<Animator>());
+            currentWeapon = weapon;
+            currentWeapon.Spawn(handTransform, GetComponent<Animator>());
         }
 
         private void AttackBehaviour()
@@ -64,12 +64,12 @@ namespace Combat
         // Animation Event
         void Hit()
         {
-            if (_target) _target.TakeDamage(weapon.GetDamage());
+            if (_target) _target.TakeDamage(currentWeapon.GetDamage());
         }
 
         public bool TargetIsInRange()
         {
-            return Vector3.Distance(transform.position, _target.transform.position) < weapon.GetRange();
+            return Vector3.Distance(transform.position, _target.transform.position) < currentWeapon.GetRange();
         }
 
         public void ResetTarget()
