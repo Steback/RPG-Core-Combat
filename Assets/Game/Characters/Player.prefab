@@ -978,11 +978,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73aa76b78bc01d653b524e5ca5297059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRange: 1
   timeBetweenAttacks: 1
-  weaponDamage: 5
-  handTransform: {fileID: 5676860227271757754}
-  weapon: {fileID: 11400000, guid: 9fd55d443c78fa1029597b7fd51bc118, type: 2}
+  rightHandTransform: {fileID: 5676860227271757754}
+  leftHandTransform: {fileID: 7899800460976269927}
+  defaultWeapon: {fileID: 11400000, guid: 361dc438472b4034c94994337513630c, type: 2}
 --- !u!195 &2584693609046820674
 NavMeshAgent:
   m_ObjectHideFlags: 0

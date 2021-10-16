@@ -16,7 +16,8 @@ namespace Combat
         private static readonly int StopAttackAnimationID = Animator.StringToHash("stopAttack");
 
         [SerializeField] public float timeBetweenAttacks = 1f;
-        [SerializeField] private Transform handTransform = null;
+        [SerializeField] private Transform rightHandTransform = null;
+        [SerializeField] private Transform leftHandTransform = null;
         [SerializeField] private Weapon defaultWeapon = null;
 
         private void Awake()
@@ -48,7 +49,7 @@ namespace Combat
         public void EquipWeapon(Weapon weapon)
         {
             currentWeapon = weapon;
-            currentWeapon.Spawn(handTransform, GetComponent<Animator>());
+            currentWeapon.Spawn(rightHandTransform, leftHandTransform, GetComponent<Animator>());
         }
 
         private void AttackBehaviour()
