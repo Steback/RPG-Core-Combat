@@ -14,9 +14,7 @@ namespace Combat
         private static readonly int AttackAnimationID = Animator.StringToHash("attack");
         private static readonly int StopAttackAnimationID = Animator.StringToHash("stopAttack");
 
-        [SerializeField] public float weaponRange = 2.0f;
         [SerializeField] public float timeBetweenAttacks = 1f;
-        [SerializeField] public float weaponDamage = 5.0f;
         [SerializeField] private Transform handTransform = null;
         [SerializeField] private Weapon weapon = null;
 
@@ -37,12 +35,12 @@ namespace Combat
 
             if (TargetIsInRange())
             {
-                _mover.MoveTo(_target.transform.position);
+                _mover.Stop();
+                AttackBehaviour();
             }
             else
             {
-                _mover.Stop();
-                AttackBehaviour();
+                _mover.MoveTo(_target.transform.position);
             }
         }
 
@@ -66,12 +64,12 @@ namespace Combat
         // Animation Event
         void Hit()
         {
-            if (_target) _target.TakeDamage(weaponDamage);
+            if (_target) _target.TakeDamage(weapon.GetDamage());
         }
 
         public bool TargetIsInRange()
         {
-            return Vector3.Distance(transform.position, _target.transform.position) > weaponRange;
+            return Vector3.Distance(transform.position, _target.transform.position) < weapon.GetRange();
         }
 
         public void ResetTarget()

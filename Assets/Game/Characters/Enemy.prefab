@@ -1849,9 +1849,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73aa76b78bc01d653b524e5ca5297059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRange: 2
   timeBetweenAttacks: 1
-  weaponDamage: 5
+  handTransform: {fileID: 5759637175876954812}
+  weapon: {fileID: 11400000, guid: 361dc438472b4034c94994337513630c, type: 2}
 --- !u!114 &4304877225037356367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1913,6 +1913,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chaseDistance: 5
   suspicionTime: 5
+  patrolPath: {fileID: 0}
+  waypointTolerance: 1
+  waypointDwellTime: 3
 --- !u!1 &6753520724183695908
 GameObject:
   m_ObjectHideFlags: 0
