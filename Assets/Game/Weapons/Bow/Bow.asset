@@ -16,4 +16,4 @@ MonoBehaviour:
   animatorOverride: {fileID: 22100000, guid: 2dfbd801f1a2e17b5ab8194fdc86bf36, type: 2}
   damage: 2
   range: 5
-  handType: 0
+  handType: 1
